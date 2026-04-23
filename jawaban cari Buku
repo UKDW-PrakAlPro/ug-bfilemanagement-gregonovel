@@ -1,0 +1,38 @@
+def cari_buku(daftar_judul, hanya_tersedia=False):
+    total_ditemuka = 0
+    with open("buku.txt.", "r") as file:
+        buku_data = file.readlines()
+
+    for judul_cari in daftar_judul:
+        judul_cari_lower = judul_cari.lower()
+        ditemukan = False
+
+        for baris in buku_data:
+            judul,penulis,tahun,status = baris.strip().split("|")
+            if judul_cari_lower in judul.lower():
+                if hanya_tersedia and status.strip().lower() != "tersedia":
+                    print ("==============================") 
+                    print (f"Judul   : {judul}")
+                    print (f"Penulis : {penulis}")
+                    print (f"Tahun   : {tahun}") 
+                    print (f"Status  : {status}")
+                    print ("==============================")
+                    total_ditemukan += 1
+                    ditemukan = True
+        if not ditemukan:
+            print (f"Buku '{judul}' tidak ditemukan / tidak tersedia")
+    print(f"Total buku ditemukan: {total_ditemukan}")
+
+
+# TEST CASE DI BAWAH JANGAN DIUBAH YA!!!
+cari_buku(["python", "data", "cihuy"])
+print("\n"+"-"*30+"\n")
+cari_buku(["cyber", "learning"], hanya_tersedia=True)
+print("\n"+"-"*30+"\n")
+cari_buku(["system", "code"])
+print("\n"+"-"*30+"\n")
+cari_buku(["data"], hanya_tersedia=True)
+print("\n"+"-"*30+"\n")
+cari_buku(["Blockchain", "Quantum"])
+print("\n"+"-"*30+"\n")
+cari_buku(["bAsIcS","cOncEPTs"])
